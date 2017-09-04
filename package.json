@@ -1,0 +1,29 @@
+{
+  "name": "@samsch/subscribe-store",
+  "version": "1.0.0",
+  "description": "A simple subscribable store factory",
+  "main": "lib/store.js",
+  "scripts": {
+    "build": "rm -rf lib && babel -d lib/ src/ --ignore spec.js,test.js",
+    "prepublish": "npm run build",
+    "test": "jest"
+  },
+  "keywords": [
+    "store",
+    "subscribable",
+    "samsch",
+    "observable",
+    "update"
+  ],
+  "author": "Samuel Scheiderich",
+  "license": "0BSD",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "eslint": "^4.6.1",
+    "eslint-config-prettier": "^2.4.0",
+    "eslint-plugin-prettier": "^2.2.0",
+    "jest": "^21.0.1",
+    "prettier": "^1.6.1"
+  }
+}

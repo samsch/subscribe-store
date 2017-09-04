@@ -1,0 +1,18 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "browsers": [
+            "ie 11",
+            "last 2 iOS versions",
+            "last 3 Safari versions",
+            "last 2 Chrome versions",
+            "last 2 Firefox versions"
+          ]
+        }
+      }
+    ]
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "name": "@samsch/subscribe-store",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A simple subscribable store factory",
   "main": "lib/store.js",
   "scripts": {
@@ -8,7 +8,13 @@
     "prepublish": "npm run build",
     "test": "jest"
   },
-  "keywords": ["store", "subscribable", "samsch", "observable", "update"],
+  "keywords": [
+    "store",
+    "subscribable",
+    "samsch",
+    "observable",
+    "update"
+  ],
   "author": "Samuel Scheiderich",
   "homepage": "https://github.com/samsch/subscribe-store",
   "repository": {

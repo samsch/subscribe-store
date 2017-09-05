@@ -8,14 +8,13 @@
     "prepublish": "npm run build",
     "test": "jest"
   },
-  "keywords": [
-    "store",
-    "subscribable",
-    "samsch",
-    "observable",
-    "update"
-  ],
+  "keywords": ["store", "subscribable", "samsch", "observable", "update"],
   "author": "Samuel Scheiderich",
+  "homepage": "https://github.com/samsch/subscribe-store",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/samsch/subscribe-store.git"
+  },
   "license": "0BSD",
   "devDependencies": {
     "babel-cli": "^6.26.0",

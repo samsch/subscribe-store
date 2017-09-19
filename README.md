@@ -1,4 +1,4 @@
-# Subscribe Store v2.0.1
+# Subscribe Store v3.0.0
 A simple subscribable store factory
 
 The Subscribe Store factory creates an object with five properties:

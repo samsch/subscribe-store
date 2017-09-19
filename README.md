@@ -1,9 +1,9 @@
 # Subscribe Store v2.0.1
 A simple subscribable store factory
 
-The Subscribe Store factory creates an object with four properties:
+The Subscribe Store factory creates an object with five properties:
 - `state`: a reference to the current stored state.
-- `updateState`: a function which replaces the state object and calls any listeners.
+- `setState` and `updateState`: functions which immutabably replace (`setState`) or merge (`updateState`) state object with their input and calls any listeners.
 - `subscribe`: a function which is called with a listener to be called by updateState.
 - `unsubscribe`: a function to remove a previously added listener.
 
@@ -56,22 +56,41 @@ const store = createStore({ bar: 'b' });
 ### store.state
 The store holds a public reference to the current state as the `state` property.
 
-### store.updateState(newState: Any)
-`store.updateState()` synchronously replaces the current state with the single passed argument, then calls all listeners attached with `store.subscribe()` with the store as their argument.
+### store.setState(newState: Any|updator: Function)
+`store.setState()` synchronously replaces the current state with the newState value. Or, if passed a function, calls it with the current state as an argument and uses the return value as the newState. Then it calls all listeners attached with `store.subscribe()` with the store as their argument.
 ```js
+// store.state === {}
+store.setState({ baz: 'c' });
+
+store.state.baz === 'c';
+// true
+
+store.setState(prevState => ({ baz: 'new ' + prevState.baz }));
+
+store.state.baz === 'new c';
+// true
+```
+
+### store.updateState(newState: Any)
+`store.updateState()` synchronously creates a new state by merging newState into a copy of the current state. Or, if passed a function, calls it with the current state as an argument and then merges the return value in. Then calls all listeners attached with `store.subscribe()` with the store as their argument.
+```js
+// store.state === {}
 store.updateState({ baz: 'c' });
 
 store.state.baz === 'c';
 // true
+
+store.updateState(prevState => ({ foo: prevState.baz }));
+
+store.state.baz === 'c' && store.state.foo === 'c';
+// true
 ```
 
 ### store.subscribe(listener: Function)
-Adds a new listener function to be called during updateState. This listener should accept a single store argument, which it can use to get the current state.
-
-> Currently `store.subscribe()` does not return a value, but future versions will probably return the store to allow for chaining.
+Adds a new listener function to be called during updateState. This listener should accept a single store argument, which it can use to get the current state. `store.subscribe()` returns the store to allow for chaining.
 
 ### store.unsubscribe(listener: Function)
-Removes a previously added listener function. Currently it will return false if the give listener was not actually attached.
+Removes a previously added listener function. Currently it will return false if the give listener was not actually attached, and otherwise returns the store to allow for chaining.
 
 > The return value of unsubscribe is likely to change in future (major) versions.
 

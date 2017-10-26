@@ -23,7 +23,7 @@ const createStore = initialState => {
   };
   store.subscribe = callback => {
     listeners.push(callback);
-    return store;
+    return () => store.unsubscribe(callback);
   };
   store.unsubscribe = callback => {
     const index = listeners.indexOf(callback);

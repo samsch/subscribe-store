@@ -28,7 +28,7 @@ const listener = aStore => {
   console.log(aStore.state);
 }
 
-aStore.subscribe(listener);
+const unsubscribeListener = aStore.subscribe(listener);
 
 aStore.updateState({
   foo: 'a',
@@ -39,6 +39,8 @@ aStore.state.foo === 'a';
 // true
 
 aStore.unsubscribe(listener);
+// OR
+unsubscribeListener();
 ```
 
 ## API
@@ -87,7 +89,10 @@ store.state.baz === 'c' && store.state.foo === 'c';
 ```
 
 ### store.subscribe(listener: Function)
-Adds a new listener function to be called during updateState. This listener should accept a single store argument, which it can use to get the current state. `store.subscribe()` returns the store to allow for chaining.
+Adds a new listener function to be called during updateState. This listener should accept a single store argument, which it can use to get the current state. `store.subscribe(listener)` returns an unsubscribe function to remove the listener.
+
+#### unsubscribe()
+The unsubscribe function returned from `store.subscribe(listener)` can be called to unsubscribe the listener. This is equivalent to calling `store.unsubcribe(listener)`. `unsubscribe()` returns the store.
 
 ### store.unsubscribe(listener: Function)
 Removes a previously added listener function. Currently it will return false if the give listener was not actually attached, and otherwise returns the store to allow for chaining.

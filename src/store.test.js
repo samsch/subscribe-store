@@ -89,9 +89,9 @@ describe('updateState', () => {
 });
 
 describe('store.subscribe', () => {
-  test('Returns the store', () => {
+  test('Returns an unsubscribe method', () => {
     const store = createStore();
-    expect(store.subscribe(() => {})).toBe(store);
+    expect(store.subscribe(() => {})).toEqual(expect.any(Function));
   });
 });
 
@@ -102,6 +102,9 @@ describe('store.unsubscribe', () => {
     store.subscribe(subscriber);
     expect(store.unsubscribe(subscriber)).toBe(store);
     expect(store.unsubscribe(subscriber)).toBe(false);
+    const unsubscribe = store.subscribe(subscriber);
+    expect(unsubscribe()).toBe(store);
+    expect(unsubscribe()).toBe(false);
   });
 });
 
@@ -121,10 +124,14 @@ describe('Subscribers', () => {
     const subscriber = jest.fn();
     const store = createStore();
     store.subscribe(subscriber);
-    store.updateState({});
+    store.updateState({}); // Calls subscriber
     store.unsubscribe(subscriber);
-    store.updateState({});
-    expect(subscriber).toHaveBeenCalledTimes(1);
+    store.updateState({}); // Doesn't call subscriber
+    const unsubscribe = store.subscribe(subscriber);
+    store.updateState({}); // Calls subscriber
+    unsubscribe();
+    store.updateState({}); // Doesn't call subscriber
+    expect(subscriber).toHaveBeenCalledTimes(2);
   });
 
   test('should all be called', () => {
